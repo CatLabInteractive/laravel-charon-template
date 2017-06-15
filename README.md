@@ -1,3 +1,5 @@
+! DEPRECRATED ! This project uses an old version of both charon and laravel.
+
 # Laravel Charon REST API project
 [![Build Status](https://travis-ci.org/CatLabInteractive/laravel-charon.svg?branch=master)](https://travis-ci.org/CatLabInteractive/laravel-charon)
 
