@@ -73908,7 +73908,7 @@ SwaggerUI({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/daedeloth/Workbench/skeleton/laravel-charon/resources/js/swagger-ui.js */"./resources/js/swagger-ui.js");
+module.exports = __webpack_require__(/*! /home/daedeloth/Workbench/laravel-charon/resources/js/swagger-ui.js */"./resources/js/swagger-ui.js");
 
 
 /***/ }),
