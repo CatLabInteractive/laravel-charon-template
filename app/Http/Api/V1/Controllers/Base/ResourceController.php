@@ -152,7 +152,7 @@ class ResourceController extends Controller
      * @param array $parameters
      * @return Context|string
      */
-    protected function getContext($action = Action::VIEW, $parameters = [])
+    protected function getContext($action = Action::VIEW, $parameters = []): \CatLab\Charon\Interfaces\Context
     {
         $context = new Context($action, $parameters);
 
