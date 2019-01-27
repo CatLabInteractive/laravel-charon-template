@@ -2,7 +2,7 @@
 
 namespace App\Http\Api\V1\ResourceDefinitions;
 
-use App\User;
+use App\Models\User;
 use CatLab\Charon\Models\ResourceDefinition;
 
 /**
@@ -11,21 +11,23 @@ use CatLab\Charon\Models\ResourceDefinition;
  */
 class UserResourceDefinition extends ResourceDefinition
 {
+    /**
+     * UserResourceDefinition constructor.
+     */
     public function __construct()
     {
         parent::__construct(User::class);
 
         $this
             ->identifier('id')
-                ->int()
+            ->int();
 
-            ->field('name')
-                ->required()
-                ->visible(true)
-                ->writeable()
+        $this->field('name')
+            ->required()
+            ->visible(true)
+            ->writeable();
 
-            ->field('email')
-                ->visible(true)
-        ;
+        $this->field('email')
+            ->visible(true);
     }
 }

@@ -8,13 +8,17 @@ use CatLab\Charon\Collections\RouteCollection;
 $routes = new RouteCollection([
     'prefix' => '/api/v1/',
     'namespace' => 'App\Http\Api\V1\Controllers',
-    'middleware' => [  ],
+    'middleware' => [
+        // 'cors
+    ],
     'suffix' => '.{format?}',
+    /*
     'security' => [
         'oauth2' => [
             'full'
         ]
     ]
+    */
 ]);
 
 $routes->group(
@@ -24,7 +28,7 @@ $routes->group(
         // All endpoints have these parameters
         $routes
             ->parameters()
-            ->path('format')->enum(['json'])->describe('Output format')->default('json');
+            ->path('format?')->enum(['json'])->describe('Output format')->default('json');
 
         // All endpoints can have these return values
         $routes->returns()->statusCode(403)->describe('Authentication error');
@@ -36,7 +40,7 @@ $routes->group(
         // Controllers: oauth middleware is required
         $routes->group(
             [
-                'middleware' => [ 'oauth' ],
+                // 'middleware' => [ 'oauth' ],
             ],
             function(RouteCollection $routes)
             {

@@ -30,15 +30,16 @@ class DescriptionController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \CatLab\Charon\Exceptions\RouteAlreadyDefined
      */
-    public function description($format)
+    public function description()
     {
-        switch ($format) {
+        switch ($this->getRequest()->route('format')) {
             case 'txt':
             case 'text':
                 return $this->textResponse();
                 break;
 
             case 'json':
+            default:
                 return $this->swaggerResponse();
                 break;
         }

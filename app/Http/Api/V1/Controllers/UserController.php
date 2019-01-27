@@ -4,8 +4,8 @@ namespace App\Http\Api\V1\Controllers;
 
 use App\Http\Api\V1\ResourceDefinitions\UserResourceDefinition;
 use App\Models\User;
+use Auth;
 use CatLab\Charon\Collections\RouteCollection;
-use Gatekeeper;
 
 /**
  * Class UserController
@@ -49,6 +49,8 @@ class UserController extends Base\ResourceController
     /**
      * @param string $id
      * @return \Illuminate\Http\JsonResponse
+     * @throws \CatLab\Charon\Exceptions\InvalidEntityException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
@@ -64,6 +66,8 @@ class UserController extends Base\ResourceController
     /**
      * @TODO This method only exists as an example. You do NOT want this in your production app.
      * @return \Illuminate\Http\JsonResponse
+     * @throws \CatLab\Charon\Exceptions\InvalidEntityException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
@@ -78,7 +82,7 @@ class UserController extends Base\ResourceController
     private function getUser($id)
     {
         if ($id === self::USER_ME) {
-            return Gatekeeper::getIdentity()->getUser();
+            return User::find(Auth::id());
         } else {
             return User::find($id);
         }

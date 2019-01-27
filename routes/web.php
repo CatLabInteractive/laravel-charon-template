@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('/docs', 'SwaggerController@swagger');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

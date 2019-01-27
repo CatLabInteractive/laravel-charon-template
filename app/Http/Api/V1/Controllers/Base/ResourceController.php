@@ -37,6 +37,7 @@ class ResourceController extends Controller
      * @param string $ability
      * @param mixed[] $arguments
      * @return \Illuminate\Auth\Access\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function authorize($ability, $arguments = [])
     {
@@ -82,6 +83,7 @@ class ResourceController extends Controller
      * @param array $parameters
      * @param null $resourceDefinition
      * @return \Illuminate\Http\JsonResponse
+     * @throws \CatLab\Charon\Exceptions\InvalidEntityException
      */
     protected function outputList($models, array $parameters = [], $resourceDefinition = null)
     {
@@ -106,6 +108,7 @@ class ResourceController extends Controller
      * @param $models
      * @param array $parameters
      * @return \Illuminate\Http\JsonResponse
+     * @throws \CatLab\Charon\Exceptions\InvalidEntityException
      */
     protected function output($models, array $parameters = [])
     {
@@ -124,6 +127,7 @@ class ResourceController extends Controller
      * @param Context $context
      * @param null $resourceDefinition
      * @return array|\mixed[]
+     * @throws \CatLab\Charon\Exceptions\InvalidEntityException
      */
     protected function modelsToResources($models, Context $context, $resourceDefinition = null)
     {
