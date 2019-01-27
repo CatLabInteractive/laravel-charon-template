@@ -8,23 +8,24 @@ use App\Models\User;
  * Class UserPolicy
  * @package App\Policies
  */
-class UserPolicy
+class UserPolicy extends BasePolicy
 {
     /**
+     * @param User|null $user
      * @return bool
      */
-    public function index()
+    public function index(User $user = null)
     {
-        return true;
+        return $this->isAdmin($user);
     }
 
     /**
      * @param User $user
-     * @param $identity
+     * @param $targetUser
      * @return bool
      */
-    public function view(User $user, $identity)
+    public function show(?User $user, $targetUser)
     {
-        return true;
+        return $this->isAdmin($user) || $user->id === $targetUser->id;
     }
 }

@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/docs', 'SwaggerController@swagger');
+Route::get('/docs', 'DocumentController@swagger');
+Route::get('/docs/oauth2', 'DocumentController@oauth2Redirect');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

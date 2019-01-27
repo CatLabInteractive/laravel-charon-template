@@ -12,13 +12,13 @@ $routes = new RouteCollection([
         // 'cors
     ],
     'suffix' => '.{format?}',
-    /*
     'security' => [
-        'oauth2' => [
-            'full'
+        [
+            'oauth2' => [
+                'full'
+            ]
         ]
     ]
-    */
 ]);
 
 $routes->group(
@@ -40,7 +40,7 @@ $routes->group(
         // Controllers: oauth middleware is required
         $routes->group(
             [
-                // 'middleware' => [ 'oauth' ],
+                'middleware' => [ 'auth:api' ],
             ],
             function(RouteCollection $routes)
             {

@@ -12,7 +12,6 @@ use CatLab\Charon\Processors\PaginationProcessor;
 use CatLab\Requirements\Exceptions\ResourceValidationException;
 use Illuminate\Database\Eloquent\Model;
 
-use Authorizer;
 use Request;
 use Response;
 
@@ -35,13 +34,21 @@ class ResourceController extends Controller
 
     /**
      * @param string $ability
-     * @param mixed[] $arguments
+     * @param array $arguments
      * @return \Illuminate\Auth\Access\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function authorize($ability, $arguments = [])
     {
-        return parent::authorize($this->resourceDefinition->getEntityClassName() . '@' . $ability, $arguments);
+        $arguments = func_get_args();
+        array_shift($arguments);
+
+        // No object defined?
+        if (is_array($arguments) && count($arguments) === 0) {
+            $arguments[] = $this->resourceDefinition->getEntityClassName();
+        }
+
+        return parent::authorize($ability, $arguments);
     }
 
     /**

@@ -73894,10 +73894,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 var SwaggerUI = __webpack_require__(/*! swagger-ui */ "./node_modules/swagger-ui/dist/swagger-ui.js");
 
-SwaggerUI({
-  dom_id: '#swagger-ui',
-  url: 'api/v1/description.json'
-});
+var ui = SwaggerUI(swaggerConfiguration);
+ui.initOAuth(oauthConfiguration);
 
 /***/ }),
 

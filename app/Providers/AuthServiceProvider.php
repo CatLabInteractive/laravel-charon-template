@@ -26,5 +26,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+        Passport::enableImplicitGrant();
+
+        Passport::tokensCan([
+            'full' => 'Get complete access to your account.'
+        ]);
     }
 }
