@@ -2,13 +2,12 @@
 
 namespace App\Http\Api\V1\Controllers;
 
+use App\Http\Api\V1\Charon\ResourceCollection;
 use App\Http\Controllers\Controller;
 use CatLab\Charon\Collections\RouteCollection;
-use CatLab\Charon\Swagger\Authentication\OAuth2Authentication;
+use CatLab\Charon\Factories\ResourceFactory;
+use CatLab\Charon\Laravel\InputParsers\JsonBodyInputParser;
 use CatLab\Charon\Swagger\SwaggerBuilder;
-
-use Request;
-use Response;
 
 /**
  * Class DescriptionController
@@ -16,6 +15,8 @@ use Response;
  */
 class DescriptionController extends Controller
 {
+    use \CatLab\Charon\Laravel\Controllers\ResourceController;
+
     /**
      * @return RouteCollection
      */
@@ -27,6 +28,7 @@ class DescriptionController extends Controller
     /**
      * @param $format
      * @return \Illuminate\Http\Response
+     * @throws \CatLab\Charon\Exceptions\RouteAlreadyDefined
      */
     public function description($format)
     {
@@ -48,39 +50,46 @@ class DescriptionController extends Controller
     protected function textResponse()
     {
         $routes = $this->getRouteCollection();
-        return Response::make($routes->__toString(), 200, [ 'Content-type' => 'text/text' ]);
+        return \Response::make($routes->__toString(), 200, [ 'Content-type' => 'text/text' ]);
     }
 
     /**
      * @return mixed
+     * @throws \CatLab\Charon\Exceptions\RouteAlreadyDefined
      */
     protected function swaggerResponse()
     {
-        $builder = new SwaggerBuilder(Request::getHttpHost(), '/');
+        $builder = new SwaggerBuilder(
+            \Request::getHttpHost(),
+            '/'
+        );
 
         $builder
-            ->setTitle('Laravel Charon REST API')
-            ->setDescription('API built with Laravel and Charon')
-            ->setContact('CatLab Interactive', 'http://www.catlab.eu/', 'info@catlab.be')
+            ->setTitle(config('charon.title'))
+            ->setDescription(config('charon.description'))
+            ->setContact(
+                config('charon.contact.name'),
+                config('charon.contact.url'),
+                config('charon.contact.email')
+            )
             ->setVersion('1.0');
-
 
         foreach ($this->getRouteCollection()->getRoutes() as $route) {
             $builder->addRoute($route);
         }
 
-        /*
-         * Authentication protocols
-         * (note that this is only to document these; must be enforced in the controllers / middleware)
-         */
-        $oauth2 = new OAuth2Authentication('oauth2');
-        $oauth2
-            ->setAuthorizationUrl(url('oauth/authorize'))
-            ->setFlow('implicit')
-            ->addScope('full', 'Full access');
+        return $builder->build($this->getContext());
+    }
 
-        $builder->addAuthentication($oauth2);
+    /**
+     * Set the input parsers that will be used to turn requests into resources.
+     * @param \CatLab\Charon\Models\Context $context
+     */
+    protected function setInputParsers(\CatLab\Charon\Models\Context $context)
+    {
+        $context->addInputParser(JsonBodyInputParser::class);
 
-        return $builder->build();
+        // Don't include PostInputParser.
+        // $context->addInputParser(PostInputParser::class);
     }
 }

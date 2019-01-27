@@ -7,8 +7,8 @@ use CatLab\Charon\Collections\RouteCollection;
  */
 $routes = new RouteCollection([
     'prefix' => '/api/v1/',
-    'namespace' => 'Api\V1\Controllers',
-    'middleware' => [ 'cors' ],
+    'namespace' => 'App\Http\Api\V1\Controllers',
+    'middleware' => [  ],
     'suffix' => '.{format?}',
     'security' => [
         'oauth2' => [
@@ -23,7 +23,8 @@ $routes->group(
     {
         // All endpoints have these parameters
         $routes
-            ->parameters()->path('format')->enum(['json'])->describe('Output format')->default('json');
+            ->parameters()
+            ->path('format')->enum(['json'])->describe('Output format')->default('json');
 
         // All endpoints can have these return values
         $routes->returns()->statusCode(403)->describe('Authentication error');

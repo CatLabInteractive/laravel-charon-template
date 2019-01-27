@@ -2,42 +2,20 @@
 
 namespace App\Http\Middleware;
 
-use CatLab\Gatekeeper\Laravel\Models\UserIdentity;
-use Closure;
-use Illuminate\Support\Facades\Auth;
-use Gatekeeper;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-/**
- * Class Authenticate
- * @package App\Http\Middleware
- */
-class Authenticate
+class Authenticate extends Middleware
 {
     /**
-     * Handle an incoming request.
+     * Get the path the user should be redirected to when they are not authenticated.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
+     * @return string
      */
-    public function handle($request, Closure $next, $guard = null)
+    protected function redirectTo($request)
     {
-        if (Auth::guard($guard)->guest()) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('auth/login');
-            }
+        if (! $request->expectsJson()) {
+            return route('login');
         }
-
-        // Register ourselves with the Gatekeeper
-        Gatekeeper::setIdentity(
-            function() {
-                return new UserIdentity(Auth::user());
-            }
-        );
-
-        return $next($request);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Api\V1\ResourceDefinitions;
 
-use App\Models\User;
+use App\User;
 use CatLab\Charon\Models\ResourceDefinition;
 
 /**
