@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,10 +16,3 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/docs', 'DocumentController@swagger');
-Route::get('/docs/oauth2', 'DocumentController@oauth2Redirect');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

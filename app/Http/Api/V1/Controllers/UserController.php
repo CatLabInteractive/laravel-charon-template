@@ -14,7 +14,7 @@ use CatLab\Charon\Collections\RouteCollection;
 class UserController extends Base\ResourceController
 {
     const USER_ME = 'me';
-    
+
     /**
      * Set all routes for this controller
      * @param RouteCollection $routes
@@ -24,7 +24,7 @@ class UserController extends Base\ResourceController
         $routes->group(function(RouteCollection $routes)
         {
             $routes->tag('users');
-            
+
             $routes
                 ->get('users/{id}', 'UserController@show')
                 ->parameters()->path('id')->required()

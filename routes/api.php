@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -11,11 +14,6 @@
 |
 */
 
-/*
- * Convert Charon routes to Laravel routes.
- */
-$routeTransformer = new \CatLab\Charon\Laravel\Transformers\RouteTransformer();
-
-/** @var \CatLab\Charon\Collections\RouteCollection $routeCollection */
-$routeCollection = include __DIR__ . '/../app/Http/Api/V1/routes.php';
-$routeTransformer->transform($routeCollection);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
